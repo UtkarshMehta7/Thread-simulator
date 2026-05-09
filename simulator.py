@@ -513,9 +513,13 @@ class ManyToManyScheduler:
         # ---------------------------------
         # Waiting Time Graph
         # ---------------------------------
+        safe_waiting = [
+            max(0.5, w)
+            for w in waiting_times
+        ]
         axes[0].bar(
             labels,
-            [max(0, w) for w in waiting_times]
+            safe_waiting
         )
 
         axes[0].set_title(
@@ -527,9 +531,13 @@ class ManyToManyScheduler:
         # ---------------------------------
         # Turnaround Time Graph
         # ---------------------------------
+        safe_turnaround = [
+            max(1, t)
+            for t in turnaround_times
+        ]
         axes[1].bar(
             labels,
-            [max(0, t) for t in turnaround_times]
+            safe_turnaround
         )
 
         axes[1].set_title(
