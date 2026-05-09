@@ -738,6 +738,11 @@ def run_simulation_backend(
         shared_workload.get("bursts"),
         shared_workload.get("arrivals")
     )
-
+@app.route("/graph")
+def graph():
+    return send_from_directory(
+        "static",
+        "performance_graph.png"
+    )
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
