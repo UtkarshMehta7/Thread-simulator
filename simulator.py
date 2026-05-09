@@ -167,7 +167,8 @@ class ManyToManyScheduler:
                         self.time + execute_time
                     )
 
-                    thread.turnaround_time = (
+                    thread.turnaround_time = max(
+                        thread.burst_time,
                         thread.completion_time
                         - thread.arrival_time
                     )
@@ -512,7 +513,10 @@ class ManyToManyScheduler:
         # ---------------------------------
         # Waiting Time Graph
         # ---------------------------------
-        axes[0].bar(labels, waiting_times)
+        axes[0].bar(
+            labels,
+            [max(0, w) for w in waiting_times]
+        )
 
         axes[0].set_title(
             f"{self.model_name} - Waiting Time"
@@ -523,7 +527,10 @@ class ManyToManyScheduler:
         # ---------------------------------
         # Turnaround Time Graph
         # ---------------------------------
-        axes[1].bar(labels, turnaround_times)
+        axes[1].bar(
+            labels,
+            [max(0, t) for t in turnaround_times]
+        )
 
         axes[1].set_title(
             f"{self.model_name} - Turnaround Time"
